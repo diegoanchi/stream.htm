@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game Store</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #1b1b1b;
+        color: #c7c7c7;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Estilo de la barra de navegación */
+      .navbar {
+        background-color: #171717;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .navbar a {
+        color: #c7c7c7;
+        text-decoration: none;
+        margin: 0 15px;
+        font-weight: bold;
+      }
+
+      .navbar a:hover {
+        color: #00ff00;
+      }
+
+      h1 {
+        text-align: center;
+        color: #fff;
+        margin-top: 20px;
+      }
+
+      .container {
+        width: 90%;
+        margin: 0 auto;
+      }
+
+      /* Botones de filtrado */
+      .filter-buttons {
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      .filter-buttons button {
+        padding: 10px 20px;
+        margin: 5px;
+        background-color: #1c1c1c;
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+
+      .filter-buttons button.active {
+        background-color: #00ff00;
+      }
+
+      /* Estilo de la galería de juegos */
+      .game-gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+        margin-top: 30px;
+      }
+
+      .game-card {
+        background-color: #2b2b2b;
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+        transition: transform 0.3s ease;
+        cursor: pointer; /* Cambiar cursor para indicar clickeable */
+      }
+
+      .game-card:hover {
+        transform: scale(1.05);
+      }
+
+      .game-card img {
+        width: 100%;
+        border-radius: 10px;
+      }
+
+      .game-card h2 {
+        margin: 10px 0 5px 0;
+        font-size: 16px;
+        color: #fff;
+      }
+
+      .game-card p {
+        color: #00ff00;
+      }
+
+      .favorite {
+        cursor: pointer;
+        color: #c7c7c7;
+      }
+
+      .favorite.active {
+        color: #ffcc00;
+      }
+
+      /* Estilo del modal */
+      .modal {
+        display: none; /* Oculto por defecto */
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.9);
+        padding-top: 60px;
+      }
+
+      .modal-content {
+        background-color: #2b2b2b;
+        margin: 5% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        border-radius: 10px;
+        color: #fff;
+      }
+
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+
+      .close:hover,
+      .close:focus {
+        color: #fff;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .play-button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #00ff00;
+        color: #000;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Título -->
+    <h1>Welcome to Our Game Store</h1>
+
+    <!-- Botones de Filtrado -->
+    <div class="filter-buttons">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="free-to-play">
+        Free to Play
+      </button>
+      <button class="filter-btn" data-filter="accion">Action</button>
+      <button class="filter-btn" data-filter="sport">Sport</button>
+      <button class="filter-btn" data-filter="aventura">Adventure</button>
+    </div>
+
+    <!-- Galería de juegos -->
+    <div class="container">
+      <div class="game-gallery">
+        <!-- Juego 1 (Free to Play, Acción) -->
+        <div
+          class="game-card free-to-play accion"
+          data-title="Game 1"
+          data-description="This is a free-to-play action game."
+        >
+          <img
+            src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/header.jpg?t=1719426374"
+            alt="Game 1"
+          />
+          <h2>Game 1</h2>
+          <p>$0.00</p>
+          <span class="favorite" data-game="1">★</span>
+        </div>
+
+        <!-- Juego 2 (Sport) -->
+        <div
+          class="game-card sport"
+          data-title="Game 2"
+          data-description="Experience the thrill of sports."
+        >
+          <img
+            src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2384620/header.jpg?t=1710574531"
+            alt="Game 2"
+          />
+          <h2>Game 2</h2>
+          <p>$29.99</p>
+          <span class="favorite" data-game="2">★</span>
+        </div>
+
+        <!-- Juego 3 (Aventura) -->
+        <div
+          class="game-card aventura"
+          data-title="Game 3"
+          data-description="Embark on an exciting adventure."
+        >
+          <img
+            src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/271590/header.jpg?t=1726606628"
+            alt="Game 3"
+          />
+          <h2>Game 3</h2>
+          <p>$39.99</p>
+          <span class="favorite" data-game="3">★</span>
+        </div>
+
+        <!-- Juego 4 (Acción) -->
+        <div
+          class="game-card accion"
+          data-title="Game 4"
+          data-description="Join the battle in this action-packed game."
+        >
+          <img
+            src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2124490/header.jpg?t=1728040674"
+            alt="Game 4"
+          />
+          <h2>Game 4</h2>
+          <p>$59.99</p>
+          <span class="favorite" data-game="4">★</span>
+        </div>
+
+        <!-- Juego 5 (Free to Play, Sport) -->
+        <div
+          class="game-card free-to-play sport"
+          data-title="Game 5"
+          data-description="Play for free in this exciting sport game."
+        >
+          <img
+            src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1036930/capsule_231x87.jpg?t=1576068454"
+            alt="Game 5"
+          />
+          <h2>Game 5</h2>
+          <p>$0.00</p>
+          <span class="favorite" data-game="5">★</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de Detalles -->
+    <div id="gameModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 id="modalTitle"></h2>
+        <p id="modalDescription"></p>
+        <button class="play-button">Play</button>
+      </div>
+    </div>
+
+    <!-- Swiper JS (opcional para carrusel) -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Lógica de Filtrado, Favoritos y Modal -->
+    <script>
+      const filterButtons = document.querySelectorAll(".filter-btn");
+      const games = document.querySelectorAll(".game-card");
+      const favorites = document.querySelectorAll(".favorite");
+      const modal = document.getElementById("gameModal");
+      const modalTitle = document.getElementById("modalTitle");
+      const modalDescription = document.getElementById("modalDescription");
+      const closeModal = document.querySelector(".close");
+
+      filterButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          // Remover clase activa de todos los botones
+          filterButtons.forEach((btn) => btn.classList.remove("active"));
+          // Añadir clase activa al botón clicado
+          button.classList.add("active");
+
+          const filter = button.getAttribute("data-filter");
+          games.forEach((game) => {
+            if (filter === "all") {
+              game.style.display = "block"; // Mostrar todos los juegos si se selecciona "All"
+            } else if (game.classList.contains(filter)) {
+              game.style.display = "block"; // Mostrar juegos que coincidan con el filtro
+            } else {
+              game.style.display = "none"; // Ocultar los juegos que no coincidan
+            }
+          });
+        });
+      });
+
+      // Mostrar todos los juegos inicialmente
+      games.forEach((game) => (game.style.display = "block"));
+
+      // Lógica de Favoritos
+      favorites.forEach((star) => {
+        star.addEventListener("click", () => {
+          star.classList.toggle("active");
+        });
+      });
+
+      // Lógica de Modal
+      games.forEach((game) => {
+        game.addEventListener("click", () => {
+          modalTitle.textContent = game.getAttribute("data-title");
+          modalDescription.textContent = game.getAttribute("data-description");
+          modal.style.display = "block"; // Mostrar el modal
+        });
+      });
+
+      // Cerrar el modal
+      closeModal.onclick = function () {
+        modal.style.display = "none";
+      };
+
+      // Cerrar el modal si se hace clic fuera del contenido
+      window.onclick = function (event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      };
+    </script>
+  </body>
+</html>
